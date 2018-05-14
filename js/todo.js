@@ -54,8 +54,7 @@ $(document).ready(function () {
                 clearInterval(intervalQuery);
                 // 刷新页面
                 console.log(Date.now());
-                location.reload(true);
-                // queryMyNote();
+                queryMyNote();
             }
         });
     }
