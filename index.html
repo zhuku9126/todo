@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>星云任务清单</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="css/todo.css">
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/nebulas.js"></script>
+    <script src="js/nebPay.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div id="tips"></div>
+        <h2>星云链上的任务清单，帮你记录待做任务，永久记录已完成任务，从此不再拖延。</h2>
+        <h3>为了隐私，每个人只能看到自己的任务清单</h3>
+        <p>新建任务清单时，需要支付少量的矿工费用，本 dapp 采用浏览器插件的方式读取用户数据，请确保安装有钱包插件。</p>
+
+
+        <div class="col-md-6">
+            <div class="todolist not-done">
+
+                <h1>待做清单</h1>
+                <input type="text" id="newItem" class="form-control add-todo" placeholder="Add todo">
+                <button id="addNew" class="btn btn-success">新建 todo</button>
+                <hr>
+
+                <ul id="sortable" class="list-unstyled">
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="todolist">
+                <h1>已完成记录</h1>
+                <ul id="done-items" class="list-unstyled"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/todo.js"></script>
+</body>
+</html>
