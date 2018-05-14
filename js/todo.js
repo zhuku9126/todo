@@ -40,17 +40,12 @@ $(document).ready(function () {
         });
 
         console.log("serialNumber is: ", serialNumber);
-
-        intervalQuery = setInterval(function () {
-            interQueryFunc();
-        }, 5000);
     });
 
-    function interQueryFunc() {
-        nebPay.queryPayInfo(serialNumber).then(function(resp) {
+    function interQueryFunc(txhash) {
+        neb.api.getTransactionReceipt(txhash).then(function (resp) {
             console.log("tx result: ", resp);
-            var ret = JSON.parse(resp);
-            if(ret.code == 0) {
+            if(resp.status === 1) {
                 clearInterval(intervalQuery);
                 // 刷新页面
                 console.log(Date.now());
@@ -60,8 +55,12 @@ $(document).ready(function () {
     }
 
     function cbAddNew(resp) {
-        console.log("response of push: ", JSON.stringify(resp));
-        // queryMyNote();
+        console.log("response of push: ", resp, "type of", typeof resp);
+        var txhash = resp.txhash;
+
+        intervalQuery = setInterval(function () {
+            interQueryFunc(txhash);
+        }, 5000);
     }
 
     // 标记为已完成
@@ -82,14 +81,16 @@ $(document).ready(function () {
             listener: cbdoneList
         })
 
-        intervalQuery = setInterval(function () {
-            interQueryFunc();
-        }, 5000);
     }
 
     function cbdoneList(resp) {
         console.log("response of done: ", JSON.stringify(resp));
         // queryMyNote();
+        var txhash = resp.txhash;
+
+        intervalQuery = setInterval(function () {
+            interQueryFunc(txhash);
+        }, 5000);
     }
 
     function queryMyNote() {
@@ -136,6 +137,7 @@ $(document).ready(function () {
 
             $("#sortable").html(todolist);
             $("#done-items").html(donelist);
+            $("#newItem").val("");
         }
     }
 
