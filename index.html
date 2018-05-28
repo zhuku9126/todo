@@ -1,53 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>星云任务清单</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="css/todo.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/solarized-light.css">
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/nebulas.js"></script>
-    <script src="js/nebPay.js"></script>
-
+    <link rel="stylesheet" href="css/style.css">
+    <title>星云合约助手-您的 Dapp 开发好帮手</title>
 </head>
+
 <body>
+    <nav class="navbar navbar-dark navbar-expand-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">星云合约助手</a>
 
-<div class="container">
-    <div class="row">
-        <div id="tips"></div>
-        <h2>星云链上的任务清单，帮你记录待做任务，永久记录已完成任务，从此不再拖延。</h2>
-        <h3>为了隐私，每个人只能看到自己的任务清单</h3>
-        <p>新建任务清单时，需要支付少量的矿工费用，本 dapp 采用浏览器插件的方式读取用户数据，请确保安装有钱包插件。</p>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
+            <div class="collapse navbar-collapse" id="Navbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">首页</a>
+                    </li>
 
-        <div class="col-md-6">
-            <div class="todolist not-done">
-
-                <h1>待做清单</h1>
-                <input type="text" id="newItem" class="form-control add-todo" placeholder="Add todo">
-                <button id="addNew" class="btn btn-success">新建 todo</button>
-                <hr>
-
-                <ul id="sortable" class="list-unstyled">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./usage.html">使用说明</a>
+                    </li>
                 </ul>
+            </div>
+        </div>
+    </nav>
 
+    <header class="jumbotron">
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-12 col-sm-12">
+                    <h1>星云合约助手</h1>
+                    <p> 星云合约助手是一个合约代码查看工具，很多的新手开发者想要开发 dapp 时，总会遇到很多的问题，有些问题查询文档可以解决，
+                        有些问题搜索很久都不知道如何解决。如果，有一个工具能够方便的查看别人已上线的 dapp 的合约代码，从中参考借鉴，那么这会让我们的开发者们
+                        节约很多时间。
+                    </p>
+                    <p>
+                        本助手就是这样一个给广大开发者助力的小工具，使用很简单，输入合约地址，点击查询，付一点点辛苦费（目前公测中暂时免费），即可获取完整的合约代码。
+                        岂不美滋滋 ^-^。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="tips"></div>
+
+        <!-- 合约信息 -->
+        <div class="row row-header">
+            <div class="col-md-6">
+                本dapp合约地址: <span id="selfaddr">n1qMrrLSNdFME12wKFFWv4Yp1SUAytqDKqo</span>
+            </div>
+            <div class="col-md-3">
+                总手续费: <span id="totalAmt"></span>
+            </div>
+            <div class="col-md-3">
+                可提余额: <span id="balance"></span>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="todolist">
-                <h1>已完成记录</h1>
-                <ul id="done-items" class="list-unstyled"></ul>
+        <br />
+
+        <!-- 录入信息 -->
+        <div class="row">
+            <div class="col-12">
+                <form>
+                    <div class="form-group row">
+                        <label for="caddr" class="col-md-2 col-form-label">输入合约地址</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="caddr" name="caddr" placeholder="比如 n1UkzP977VGbsPth7rQqaMDnVCGUtRUzCPY">
+                        </div>
+                        <div class="col-md-2">
+                            手续费:
+                            <span id="fee"></span>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary" id="doQuery">查询</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 渲染出来查询结果 -->
+        <div class="row row-content">
+            <div class="col-12" id="querying"></div>
+        </div>
+
+        <div class="row">
+            <h3>查询记录</h3>
+            <div class="col-12" id="history">
             </div>
         </div>
     </div>
 
-</div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <p>© Copyright 2018 星云合约助手 <a href="mailto:zhuku9126@yandex.com">联系作者</a> <a href="https://incentive.nebulas.io/cn/signup.html?invite=Xr5bL" target="_blank">参加星云链 dapp 活动得 100nas</a> </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-<script src="js/todo.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="lib/nebPay.js"></script>
+    <script src="lib/nebulas.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/highlight.js"></script>
+
+    <script src="js/contract_helper.js"></script>
 </body>
+
 </html>
