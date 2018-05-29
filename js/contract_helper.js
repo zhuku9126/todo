@@ -66,7 +66,7 @@ $(document).ready(function () {
             if(ret.length > 0) {
                 var html = '<div class="col-12" id="history">';
                 for(var i=0; i<ret.length; i++) {
-                    var tmp = '<a href="./code.html?addr=' + ret[i] + '">' + ret[i] + '</a> '
+                    var tmp = '<a href="./code.html?addr=' + ret[i] + '">' + ret[i] + '</a> ';
                     html += tmp;
                 }
 
@@ -88,18 +88,33 @@ $(document).ready(function () {
 
         if(hasWallet == false) {
             $("#querying").text("请先安装钱包插件，再使用本网站功能");
-            return
+            return;
         }
+
+        $("#querying").text("合约地址有效性检查中...");
 
         userCaddr = caddr;
 
+        // 先检查是否可以查询回来数据，然后根据情况，要求用户付费
+        if(fee > 0) {
+            checkAddrIsContract(caddr);
+        } else {
+            var value = convertWeiToNas(fee);
+            var callFunc = "saveQuery";
+            var args = [caddr];
+
+            doPost(value, callFunc, args, doQueryCallback);
+        }
+    });
+
+    // 获取用户支付打赏，查询展示信息
+    function getPayAndQuery() {
         var value = convertWeiToNas(fee);
         var callFunc = "saveQuery";
-        var args = [caddr];
+        var args = [userCaddr];
 
         doPost(value, callFunc, args, doQueryCallback);
-
-    });
+    }
 
     function doQueryCallback(resp) {
         console.log("doQueryCallback: ", resp);
@@ -230,6 +245,26 @@ $(document).ready(function () {
         });
     }
 
+    function checkAddrIsContract(addr) {
+        neb.api.getTransactionByContract(addr).then(function (resp) {
+            console.log("检查是否有效合约 ", addr, resp);
+            if(resp.status == 0) {
+                $("#querying").text("不是有效的合约地址，请检查输入信息。");
+                return false;
+            } else if (resp.status == 1) {
+                getPayAndQuery();
+                return true;
+            } else {
+                $("#querying").text("不是有效的合约地址，请检查输入信息。");
+                return false;
+            }
+        }).catch(function (err) {
+            console.log("检查地址是否合约出错 ", err.message);
+            $("#querying").text("不是有效的合约地址，请检查输入信息。");
+            return false;
+        })
+    }
+
     function doGET(from, func, args, callback) {
         var value = "0";
         var nonce = "0";
@@ -261,7 +296,7 @@ $(document).ready(function () {
 
         console.log("serialNumber is: ", serialNumber);
 
-        $("#querying").text("交易处理及结果查询中，大概需要十多秒，请稍后...");
+        $("#querying").text("请付费，交易处理及查询大概需要十多秒，请稍后...");
     }
 
     function convertWeiToNas(wei) {
