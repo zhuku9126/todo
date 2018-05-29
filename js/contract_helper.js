@@ -82,7 +82,7 @@ $(document).ready(function () {
         event.preventDefault();
         var caddr = $("#caddr").val();
         if(Account.isValidAddress(caddr) != true) {
-            $("#querying").text("请输入合法的合约地址");
+            $("#querying").text("请输入合法的合约地址(获取有效合约地址请看页面上的使用说明)");
             return;
         }
 
@@ -144,7 +144,7 @@ $(document).ready(function () {
             if(resp.status == 0) {
                 // failed
                 console.log("根据合约地址读取 txhash 信息失败 ", resp);
-                $("#querying").text("根据合约地址读取信息失败，请检查合约地址");
+                $("#querying").text("根据合约地址读取信息失败，请检查合约地址(获取有效合约地址请看页面上的使用说明)");
 
             } else if (resp.status == 1) {
                 // success
@@ -212,7 +212,7 @@ $(document).ready(function () {
             if(resp.status == 0) {
                 // failed
                 console.log("根据合约地址读取 txhash 信息失败 ", resp);
-                $("#detailquerying").text("根据合约地址读取信息失败，请检查合约地址");
+                $("#detailquerying").text("根据合约地址读取信息失败，请检查合约地址(获取有效合约地址请看页面上的使用说明)");
 
             } else if (resp.status == 1) {
                 // success
@@ -249,18 +249,18 @@ $(document).ready(function () {
         neb.api.getTransactionByContract(addr).then(function (resp) {
             console.log("检查是否有效合约 ", addr, resp);
             if(resp.status == 0) {
-                $("#querying").text("不是有效的合约地址，请检查输入信息。");
+                $("#querying").text("不是有效的合约地址，请检查输入信息(获取有效合约地址请看页面上的使用说明)。");
                 return false;
             } else if (resp.status == 1) {
                 getPayAndQuery();
                 return true;
             } else {
-                $("#querying").text("不是有效的合约地址，请检查输入信息。");
+                $("#querying").text("不是有效的合约地址，请检查输入信息(获取有效合约地址请看页面上的使用说明)。");
                 return false;
             }
         }).catch(function (err) {
             console.log("检查地址是否合约出错 ", err.message);
-            $("#querying").text("不是有效的合约地址，请检查输入信息。");
+            $("#querying").text("不是有效的合约地址，请检查输入信息(获取有效合约地址请看页面上的使用说明)。");
             return false;
         })
     }
