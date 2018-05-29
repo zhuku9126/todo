@@ -163,11 +163,11 @@ $(document).ready(function () {
                 var div = '<div class="col-12">';
                 div += qAddr;
                 div += qHash;
-                var code = '<pre><code class="javascript">' + codeSource + '</code></pre>';
+                var code = '<pre><code class="language-javascript">' + codeSource + '</code></pre>';
                 div += code;
                 div += "</div>";
                 $("#querying").html(div);
-                hljs.initHighlighting();
+                Prism.highlightAll();
 
             } else {
 
@@ -231,11 +231,12 @@ $(document).ready(function () {
                 var div = '<div class="col-md-12">';
                 div += qAddr;
                 div += qHash;
-                var code = '<pre><code class="javascript">' + codeSource + '</code></pre>';
+                var code = '<pre><code class="language-javascript">' + codeSource + '</code></pre>';
                 div += code;
                 div += "</div>";
+
                 $("#detailquerying").html(div);
-                hljs.initHighlighting();
+                Prism.highlightAll();
 
             } else {
 
