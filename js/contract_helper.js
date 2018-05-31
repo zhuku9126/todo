@@ -163,7 +163,8 @@ $(document).ready(function () {
                 var div = '<div class="col-12">';
                 div += qAddr;
                 div += qHash;
-                var code = '<pre><code class="language-javascript">' + codeSource + '</code></pre>';
+                codeSource = codeSource.replace(/</g, "&lt;");
+                var code = '<pre><code class="language-javascript line-numbers"><p>' + codeSource + '</p></code></pre>';
                 div += code;
                 div += "</div>";
                 $("#querying").html(div);
