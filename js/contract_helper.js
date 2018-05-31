@@ -230,7 +230,7 @@ $(document).ready(function () {
                 div += qAddr;
                 div += qHash;
                 codeSource = codeSource.replace(/</g, "&lt;");
-                var code = '<pre><code class="language-javascript"><p>' + codeSource + '</p></code></pre>';
+                var code = '<pre><code class="language-javascript line-numbers"><p>' + codeSource + '</p></code></pre>';
                 div += code;
                 div += "</div>";
                 $("#detailquerying").html(div);
