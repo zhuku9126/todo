@@ -219,8 +219,6 @@ $(document).ready(function () {
                 console.log("根据合约地址读取 txhash 信息成功 ", resp);
                 var data = resp.data;
                 data = Base64.decode(data);
-                console.log(data);
-                console.log(typeof data);
 
                 data = JSON.parse(data);
                 var codeSource = data.Source;
@@ -228,13 +226,13 @@ $(document).ready(function () {
                 var qAddr = "<p>合约地址: " + '<a href="https://explorer.nebulas.io/#/address/' + resp.contract_address + '" target="_blank">' + resp.contract_address + "</a></p>";
                 var qHash = "<p>合约HASH: " + '<a href="https://explorer.nebulas.io/#/tx/' + resp.hash + '" target="_blank">' + resp.hash + "</a></p>";
 
-                var div = '<div class="col-md-12">';
+                var div = '<div class="col-12">';
                 div += qAddr;
                 div += qHash;
-                var code = '<pre><code class="language-javascript">' + codeSource + '</code></pre>';
+                codeSource = codeSource.replace(/</g, "&lt;");
+                var code = '<pre><code class="language-javascript"><p>' + codeSource + '</p></code></pre>';
                 div += code;
                 div += "</div>";
-
                 $("#detailquerying").html(div);
                 Prism.highlightAll();
 
