@@ -163,7 +163,7 @@ $(document).ready(function () {
                 var div = '<div class="col-12">';
                 div += qAddr;
                 div += qHash;
-                codeSource = codeSource.replace(/</g, "&lt;");
+                codeSource = codeSource.replace(/</g, "&lt;").replace(/>/g, "&gt;");
                 var code = '<pre><code class="language-javascript line-numbers"><p>' + codeSource + '</p></code></pre>';
                 div += code;
                 div += "</div>";
@@ -230,7 +230,7 @@ $(document).ready(function () {
                 var div = '<div class="col-12">';
                 div += qAddr;
                 div += qHash;
-                codeSource = codeSource.replace(/</g, "&lt;");
+                codeSource = codeSource.replace(/</g, "&lt;").replace(/>/g, "&gt;");
                 var code = '<pre><code class="language-javascript line-numbers"><p>' + codeSource + '</p></code></pre>';
                 div += code;
                 div += "</div>";
@@ -315,7 +315,7 @@ $(document).ready(function () {
             var tips = '<div class="row alert alert-danger">\n' +
                 '    <a href="https://github.com/ChengOrangeJu/WebExtensionWallet" target="_blank"> <strong>注意!</strong>未检测到浏览器扩展，请点我下载安装\n</a>' +
                 '    <a href="#" class="close" data-dismiss="alert">&times;</a>\n' +
-                '</div>'
+                '</div>';
             $("#tips").html(tips);
             hasWallet = false;
         }
